@@ -1,0 +1,16 @@
+html:
+    1. container
+    2. title
+    3. form
+    4. counters
+    5. list
+
+js:
+    1. elements
+    2. submit form
+    3. remove task
+    4. update task - change status or name
+    5. create task
+    6. remove task
+    7. update task
+    8. count tasks
