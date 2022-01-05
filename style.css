@@ -1,18 +1,3 @@
-body {
-    text-align: center;
-}
-
-.stats {
-    display: flex;
-    margin-top: 15px;
-    margin-bottom: 1px;
-    border: 1px solid black;
-    width: 350px;
-    align-items: center;
-    justify-content: center;
-}
-
-.completed {
-    margin-left: 25px;
-    margin-right: 25px;
+.completed_task {
+    text-decoration: line-through;
 }
