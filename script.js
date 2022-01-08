@@ -15,9 +15,9 @@ tasks.map(task => {
     createTask(task)
 })
 
-// submit
-todoForm.addEventListener('submit', (event) => {
-    event.preventDefault()
+// submit task
+todoForm.addEventListener('submit', (e) => {
+    e.preventDefault()
     const input = this.text
     const inputText = input.value
     if (inputText != '') {
@@ -31,6 +31,11 @@ todoForm.addEventListener('submit', (event) => {
         localStorage.setItem('tasks', JSON.stringify(tasks))
         createTask(task)
     }
+})
+
+// update task status
+tasksList.addEventListener("input", (e) => {
+    e.target.closest('li').id
 })
 
 // create task
@@ -50,6 +55,7 @@ function createTask(task) {
     countTasks()
 }
 
+// count tasks
 function countTasks() {
     totalTasks.innerHTML = tasks.length
     completedTasksList = tasks.filter((task) => { return task.isCompleted === true })
