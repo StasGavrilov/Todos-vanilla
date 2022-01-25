@@ -35,8 +35,13 @@ todoForm.addEventListener('submit', (e) => {
 
 // update task status
 tasksList.addEventListener("input", (e) => {
-    e.target.closest('li').id
+    const taskId = e.target.closest('li').id
 })
+
+// update task
+function updateTask(taskId) {
+
+}
 
 // create task
 function createTask(task) {
@@ -44,9 +49,9 @@ function createTask(task) {
     taskListEl.setAttribute('task', task.id)
     const completedClass = task.isCompleted ? 'completed_task' : ''
     const newTaskEls = `
-    <div>
-    <input type="checkbox" id=${task.id} class=${completedClass}/>
+    <div class="x">
     <span class="list">${task.text}</span>
+    <input type="checkbox" id=${task.id} class=${completedClass}/>
     <button class="remove-task">X</button>
     </div>
     `

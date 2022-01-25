@@ -1,0 +1,28 @@
+body {
+    background-color: burlywood;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 7px;
+}
+
+.completed {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.list-of-todos {
+    display: inline-grid;
+    padding: 20px;
+}
+
+.x {
+    display: inline-flex;
+    margin-bottom: 3px;
+}
