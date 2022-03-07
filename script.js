@@ -35,13 +35,10 @@ todoForm.addEventListener('submit', (e) => {
 
 // update task status
 tasksList.addEventListener("input", (e) => {
-    const taskId = e.target.closest('li').id
+    const taskId = e.target.closest('li').id // need to find the id
+    console.log(taskId)
+    updateTask(taskId, e.target)
 })
-
-// update task
-function updateTask(taskId) {
-
-}
 
 // create task
 function createTask(task) {
@@ -50,13 +47,27 @@ function createTask(task) {
     const completedClass = task.isCompleted ? 'completed_task' : ''
     const newTaskEls = `
     <div class="x">
+    <input type="checkbox" id="${task.name}-${task.id}" name="tasks" ${task.isCompleted ? "checked" : ""}>
+    <label></label>
     <span class="list">${task.text}</span>
-    <input type="checkbox" id=${task.id} class=${completedClass}/>
     <button class="remove-task">X</button>
     </div>
     `
     taskListEl.innerHTML = newTaskEls
     tasksList.appendChild(taskListEl)
+    countTasks()
+}
+
+function updateTask(taskId, el) {
+    const task = tasks.find(task => task.id === parseInt(taskId))
+
+    if (!task.isCompleted) {
+        el.setAttribute("checked", "");
+    } else {
+        el.removeAttribute("checked");
+    }
+
+    localStorage.setItem('tasks', JSON.stringify(tasks))
     countTasks()
 }
 
