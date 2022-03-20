@@ -3,26 +3,22 @@ const totalTasks = document.querySelector('.total span')
 const completedTasks = document.querySelector('.completed span')
 const remainingTasks = document.querySelector('.remaining span')
 const tasksList = document.querySelector('.list-of-todos')
-let tasks = JSON.parse(localStorage.getItem('tasks'))
+let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 
-if (tasks === null) {
-    tasks = []
+if (localStorage.getItem('tasks')) {
+    tasks.map(task => {
+        createTask(task)
+    })
 }
 
-countTasks()
-
-tasks.map(task => {
-    createTask(task)
-})
-
-// submit task
+// submit task event
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault()
     const input = this.text
     const inputText = input.value
     if (inputText != '') {
         const task = {
-            id: new Date().getTime(),
+            id: tasks.length,
             text: inputText,
             isCompleted: false //status
         }
@@ -30,38 +26,57 @@ todoForm.addEventListener('submit', (e) => {
         tasks.push(task)
         localStorage.setItem('tasks', JSON.stringify(tasks))
         createTask(task)
+        todoForm.reset();
+    }
+    input.focus();
+})
+
+// remove task event
+tasksList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-task")) {
+        const taskId = e.target.closest("li").id
+        removeTask(taskId)
     }
 })
 
-// update task status
+// update task status event
 tasksList.addEventListener("input", (e) => {
-    const taskId = e.target.closest('li').id // need to find the id
-    console.log(taskId)
+    const taskId = e.target.closest("li").id
     updateTask(taskId, e.target)
 })
 
 // create task
 function createTask(task) {
-    const taskListEl = document.createElement('li')
-    taskListEl.setAttribute('task', task.id)
+    const taskEl = document.createElement('li')
+    taskEl.setAttribute('id', task.id)
     const completedClass = task.isCompleted ? 'completed_task' : ''
     const newTaskEls = `
     <div class="x">
-    <input type="checkbox" id="${task.name}-${task.id}" name="tasks" ${task.isCompleted ? "checked" : ""}>
-    <label></label>
+    <input type="checkbox" id="${task.name}" name="tasks" ${task.isCompleted ? "checked" : ""}>
+    <label for="${task.name}></label>
     <span class="list">${task.text}</span>
-    <button class="remove-task">X</button>
     </div>
+    <button class="remove-task">X</button>
     `
-    taskListEl.innerHTML = newTaskEls
-    tasksList.appendChild(taskListEl)
+    taskEl.innerHTML = newTaskEls
+    tasksList.appendChild(taskEl)
     countTasks()
 }
 
+// remove task
+function removeTask(taskId) {
+    tasks = tasks.filter((task) => task.id !== parseInt(taskId))
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+    document.getElementById(taskId).remove()
+    countTasks()
+}
+
+// update task
 function updateTask(taskId, el) {
     const task = tasks.find(task => task.id === parseInt(taskId))
+    task.isCompleted = !task.isCompleted
 
-    if (!task.isCompleted) {
+    if (task.isCompleted) {
         el.setAttribute("checked", "");
     } else {
         el.removeAttribute("checked");
